@@ -231,7 +231,11 @@ async function main() {
 }
 
 // Run scanner if this is the main module
-if (import.meta.url === `file://${process.argv[1]}`) {
+// Note: Always run when executed directly (not when imported as a module)
+const isMainModule = import.meta.url === `file://${process.argv[1]}` ||
+                     import.meta.url.endsWith('/scanner/index.js');
+
+if (isMainModule) {
   main().catch(error => {
     logger.error('Scanner', 'Unhandled error', error);
     process.exit(1);

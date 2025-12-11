@@ -97,7 +97,11 @@ async function main() {
 }
 
 // Run if this is the main module
-if (import.meta.url === `file://${process.argv[1]}`) {
+// Note: Always run when executed directly (not when imported as a module)
+const isMainModule = import.meta.url === `file://${process.argv[1]}` ||
+                     import.meta.url.endsWith('/api/index.js');
+
+if (isMainModule) {
   main().catch(error => {
     logger.error('API', 'Unhandled error', error);
     process.exit(1);
