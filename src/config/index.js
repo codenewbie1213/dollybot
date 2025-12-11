@@ -7,12 +7,12 @@ import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 
-// Load environment variables
-dotenv.config();
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const projectRoot = join(__dirname, '../..');
+
+// Load environment variables with explicit path
+dotenv.config({ path: join(projectRoot, '.env') });
 
 /**
  * Parse comma-separated environment variable
